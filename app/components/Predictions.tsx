@@ -8,48 +8,66 @@ type Props = {
 };
 
 const Predictions: React.FC<Props> = ({ relation }) => {
-  const [model, setModel] = useState<tf.LayersModel | null>(null);
+  const [models, setModels] = useState<tf.LayersModel[] | null>(null);
   const [predictions, setPredictions] = useState<number[]>(Array(6).fill(0));
 
   useEffect(() => {
-    const loadModel = async () => {
+    const loadModels = async () => {
       try {
-        const model = await tf.loadLayersModel("/model/model.json");
-        setModel(model);
+        const reflexivity = await tf.loadLayersModel(
+          "/models/reflexivity/model.json"
+        );
+        const symmetry = await tf.loadLayersModel(
+          "/models/symmetry/model.json"
+        );
+        const transitivity = await tf.loadLayersModel(
+          "/models/transitivity/model.json"
+        );
+        const antireflexivity = await tf.loadLayersModel(
+          "/models/antireflexivity/model.json"
+        );
+        const antisymmetry = await tf.loadLayersModel(
+          "/models/antisymmetry/model.json"
+        );
+        const antitransitivity = await tf.loadLayersModel(
+          "/models/antitransitivity/model.json"
+        );
+
+        setModels([
+          reflexivity,
+          symmetry,
+          transitivity,
+          antireflexivity,
+          antisymmetry,
+          antitransitivity,
+        ]);
       } catch (error) {
         alert(error);
       }
     };
 
-    loadModel();
+    loadModels();
   }, []);
 
   useEffect(() => {
     const makePrediction = async () => {
-      if (!model) return;
+      if (!models) return;
 
-      const input = tf.tensor(relation).reshape([1, 5, 5, 1]);
-      const result = model.predict(input);
+      const input = tf.tensor(relation).reshape([1, 25]);
+      const results = models.map(model => model.predict(input));
 
-      const reflexivity = await (result as any)[0].array();
-      const symmetry = await (result as any)[1].array();
-      const transitivity = await (result as any)[2].array();
-      const antiReflexivity = await (result as any)[2].array();
-      const antiSymmetry = await (result as any)[2].array();
-      const antiTransitivity = await (result as any)[2].array();
+      const newPredictions = [];
 
-      setPredictions([
-        reflexivity[0],
-        symmetry[0],
-        transitivity[0],
-        antiReflexivity[0],
-        antiSymmetry[0],
-        antiTransitivity[0],
-      ]);
+      for (const result of results) {
+        const prediction = await (result as any).array();
+        newPredictions.push(prediction);
+      }
+
+      setPredictions(newPredictions);
     };
 
     makePrediction();
-  }, [model, relation]);
+  }, [models, relation]);
 
   return (
     <div>
