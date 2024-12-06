@@ -61,7 +61,7 @@ const Predictions: React.FC<Props> = ({ relation }) => {
   return (
     <>
       {!models && <LoadingPopup />}
-      <div className="w-[332px]">
+      <div className="flex flex-col gap-5 w-[332px]">
         <div className="flex flex-col gap-1">
           {predictions.map((prediction, index) => (
             <Property
@@ -71,18 +71,34 @@ const Predictions: React.FC<Props> = ({ relation }) => {
             />
           ))}
         </div>
-        <div>
+        <div className="flex flex-col gap-2">
           <Type
             name="Equivalence"
-            dependencies={[predictions[0], predictions[2], predictions[5]]}
+            dependencyNames={["Reflexivity", "Symmetry", "Transitivity"]}
+            dependencyPredictions={[
+              predictions[0],
+              predictions[2],
+              predictions[5],
+            ]}
           />
           <Type
             name="Partial Order"
-            dependencies={[predictions[0], predictions[4], predictions[5]]}
+            dependencyNames={["Reflexivity", "Antisymmetry", "Transitivity"]}
+            dependencyPredictions={[
+              predictions[0],
+              predictions[4],
+              predictions[5],
+            ]}
           />
           <Type
             name="Total Order"
-            dependencies={[
+            dependencyNames={[
+              "Reflexivity",
+              "Antisymmetry",
+              "Transitivity",
+              "Totality",
+            ]}
+            dependencyPredictions={[
               predictions[0],
               predictions[4],
               predictions[5],
@@ -91,11 +107,17 @@ const Predictions: React.FC<Props> = ({ relation }) => {
           />
           <Type
             name="Strict Partial Order"
-            dependencies={[predictions[1], predictions[5]]}
+            dependencyNames={["Irreflexivity", "Transitivity"]}
+            dependencyPredictions={[predictions[1], predictions[5]]}
           />
           <Type
             name="Strict Total Order"
-            dependencies={[predictions[1], predictions[5], predictions[7]]}
+            dependencyNames={["Irreflexivity", "Transitivity", "Totality"]}
+            dependencyPredictions={[
+              predictions[1],
+              predictions[5],
+              predictions[7],
+            ]}
           />
         </div>
       </div>
