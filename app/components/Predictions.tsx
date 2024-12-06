@@ -4,7 +4,7 @@ import Property from "./Property";
 import Type from "./Type";
 import LoadingPopup from "./LoadingPopup";
 
-const PROPERTIES = [
+const NAMES = [
   "Reflexivity",
   "Irreflexivity",
   "Symmetry",
@@ -14,6 +14,18 @@ const PROPERTIES = [
   "Antitransitivity",
   "Totality",
   "Trichotomy",
+];
+
+const DEFINITIONS = [
+  "\\( \\forall x \\in A, \\; xRx \\)",
+  "\\( \\forall x \\in A, \\; x \\not R x \\)",
+  "\\( \\forall x, y \\in A, \\; xRy \\implies yRx \\)",
+  "\\( \\forall x, y \\in A, \\; xRy \\implies y \\not R x \\)",
+  "\\( \\forall x, y \\in A, \\; xRy \\land yRx \\implies x=y \\)",
+  "\\( \\forall x, y, z \\in A, \\; xRy \\land yRz \\implies xRz \\)",
+  "\\( \\forall x, y, z \\in A, \\; xRy \\land yRz \\implies x \\not R z \\)",
+  "\\( \\forall x \\in A, \\exists y \\in A, \\; xRy \\)",
+  "\\( \\forall x, y \\in A, \\; x \\neq y \\implies xRy \\lor yRx \\)",
 ];
 
 type Props = {
@@ -28,7 +40,7 @@ const Predictions: React.FC<Props> = ({ relation }) => {
     const loadModels = async () => {
       setModels(
         await Promise.all(
-          PROPERTIES.map(property =>
+          NAMES.map(property =>
             tf.loadLayersModel(`/models/${property.toLowerCase()}/model.json`)
           )
         )
@@ -66,7 +78,8 @@ const Predictions: React.FC<Props> = ({ relation }) => {
           {predictions.map((prediction, index) => (
             <Property
               key={index}
-              name={PROPERTIES[index]}
+              name={NAMES[index]}
+              definition={DEFINITIONS[index]}
               prediction={prediction}
             />
           ))}

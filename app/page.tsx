@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Properties from "./components/Predictions";
 import Relation from "./components/Relation";
 import RelationButtons from "./components/RelationButtons";
+import { MathJaxContext } from "better-react-mathjax";
 
 const Home = () => {
   const [relation, setRelation] = useState(Array(5).fill(Array(5).fill(1)));
@@ -40,15 +41,17 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-2 p-10">
-      <Relation relation={relation} togglePair={togglePair} />
-      <RelationButtons
-        toggleAllOn={toggleAllOn}
-        toggleAllOff={toggleAllOff}
-        toggleRandom={toggleRandom}
-      />
-      <Properties relation={relation} />
-    </div>
+    <MathJaxContext>
+      <div className="flex flex-col items-center gap-2 p-10">
+        <Relation relation={relation} togglePair={togglePair} />
+        <RelationButtons
+          toggleAllOn={toggleAllOn}
+          toggleAllOff={toggleAllOff}
+          toggleRandom={toggleRandom}
+        />
+        <Properties relation={relation} />
+      </div>
+    </MathJaxContext>
   );
 };
 
