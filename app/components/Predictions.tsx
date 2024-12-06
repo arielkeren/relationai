@@ -22,7 +22,7 @@ type Props = {
 
 const Predictions: React.FC<Props> = ({ relation }) => {
   const [models, setModels] = useState<tf.LayersModel[] | null>(null);
-  const [predictions, setPredictions] = useState<number[]>(Array(6).fill(0));
+  const [predictions, setPredictions] = useState<number[]>(Array(9).fill(0));
 
   useEffect(() => {
     const loadModels = async () => {
