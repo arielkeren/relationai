@@ -6,11 +6,14 @@ import LoadingPopup from "./LoadingPopup";
 
 const PROPERTIES = [
   "Reflexivity",
+  "Irreflexivity",
   "Symmetry",
+  "Asymmetry",
+  "Antisymmetry",
   "Transitivity",
-  "Anti-Reflexivity",
-  "Anti-Symmetry",
-  "Anti-Transitivity",
+  "Antitransitivity",
+  "Totality",
+  "Trichotomy",
 ];
 
 type Props = {
@@ -23,31 +26,13 @@ const Predictions: React.FC<Props> = ({ relation }) => {
 
   useEffect(() => {
     const loadModels = async () => {
-      const reflexivity = await tf.loadLayersModel(
-        "/models/reflexivity/model.json"
+      setModels(
+        await Promise.all(
+          PROPERTIES.map(property =>
+            tf.loadLayersModel(`/models/${property.toLowerCase()}/model.json`)
+          )
+        )
       );
-      const symmetry = await tf.loadLayersModel("/models/symmetry/model.json");
-      const transitivity = await tf.loadLayersModel(
-        "/models/transitivity/model.json"
-      );
-      const antireflexivity = await tf.loadLayersModel(
-        "/models/antireflexivity/model.json"
-      );
-      const antisymmetry = await tf.loadLayersModel(
-        "/models/antisymmetry/model.json"
-      );
-      const antitransitivity = await tf.loadLayersModel(
-        "/models/antitransitivity/model.json"
-      );
-
-      setModels([
-        reflexivity,
-        symmetry,
-        transitivity,
-        antireflexivity,
-        antisymmetry,
-        antitransitivity,
-      ]);
     };
 
     loadModels();
@@ -76,8 +61,8 @@ const Predictions: React.FC<Props> = ({ relation }) => {
   return (
     <>
       {!models && <LoadingPopup />}
-      <div>
-        <div className="flex flex-col gap-1 w-[332px]">
+      <div className="w-[332px]">
+        <div className="flex flex-col gap-1">
           {predictions.map((prediction, index) => (
             <Property
               key={index}
@@ -89,11 +74,28 @@ const Predictions: React.FC<Props> = ({ relation }) => {
         <div>
           <Type
             name="Equivalence"
-            dependencies={[predictions[0], predictions[1], predictions[2]]}
+            dependencies={[predictions[0], predictions[2], predictions[5]]}
+          />
+          <Type
+            name="Partial Order"
+            dependencies={[predictions[0], predictions[4], predictions[5]]}
+          />
+          <Type
+            name="Total Order"
+            dependencies={[
+              predictions[0],
+              predictions[4],
+              predictions[5],
+              predictions[7],
+            ]}
           />
           <Type
             name="Strict Partial Order"
-            dependencies={[predictions[2], predictions[3]]}
+            dependencies={[predictions[1], predictions[5]]}
+          />
+          <Type
+            name="Strict Total Order"
+            dependencies={[predictions[1], predictions[5], predictions[7]]}
           />
         </div>
       </div>
