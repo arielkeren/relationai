@@ -71,7 +71,7 @@ const Predictions: React.FC<Props> = ({ relation }) => {
 
   return (
     <div>
-      <div>
+      <div className="flex flex-col gap-1 w-[332px]">
         <Property name="Reflexivity" prediction={predictions[0]} />
         <Property name="Symmetry" prediction={predictions[1]} />
         <Property name="Transitivity" prediction={predictions[2]} />
