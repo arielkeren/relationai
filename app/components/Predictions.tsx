@@ -13,37 +13,31 @@ const Predictions: React.FC<Props> = ({ relation }) => {
 
   useEffect(() => {
     const loadModels = async () => {
-      try {
-        const reflexivity = await tf.loadLayersModel(
-          "/models/reflexivity/model.json"
-        );
-        const symmetry = await tf.loadLayersModel(
-          "/models/symmetry/model.json"
-        );
-        const transitivity = await tf.loadLayersModel(
-          "/models/transitivity/model.json"
-        );
-        const antireflexivity = await tf.loadLayersModel(
-          "/models/antireflexivity/model.json"
-        );
-        const antisymmetry = await tf.loadLayersModel(
-          "/models/antisymmetry/model.json"
-        );
-        const antitransitivity = await tf.loadLayersModel(
-          "/models/antitransitivity/model.json"
-        );
+      const reflexivity = await tf.loadLayersModel(
+        "/models/reflexivity/model.json"
+      );
+      const symmetry = await tf.loadLayersModel("/models/symmetry/model.json");
+      const transitivity = await tf.loadLayersModel(
+        "/models/transitivity/model.json"
+      );
+      const antireflexivity = await tf.loadLayersModel(
+        "/models/antireflexivity/model.json"
+      );
+      const antisymmetry = await tf.loadLayersModel(
+        "/models/antisymmetry/model.json"
+      );
+      const antitransitivity = await tf.loadLayersModel(
+        "/models/antitransitivity/model.json"
+      );
 
-        setModels([
-          reflexivity,
-          symmetry,
-          transitivity,
-          antireflexivity,
-          antisymmetry,
-          antitransitivity,
-        ]);
-      } catch (error) {
-        alert(error);
-      }
+      setModels([
+        reflexivity,
+        symmetry,
+        transitivity,
+        antireflexivity,
+        antisymmetry,
+        antitransitivity,
+      ]);
     };
 
     loadModels();

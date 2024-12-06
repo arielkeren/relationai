@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Properties from "./components/Predictions";
 import Relation from "./components/Relation";
 import RelationButtons from "./components/RelationButtons";
@@ -34,6 +34,10 @@ const Home = () => {
         )
       )
     );
+
+  useEffect(() => {
+    toggleRandom();
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-2 p-10">
