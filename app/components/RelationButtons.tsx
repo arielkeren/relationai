@@ -17,19 +17,19 @@ const RelationButtons: React.FC<Props> = ({
     <div className="flex gap-[4px]">
       <button
         onClick={toggleAllOff}
-        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[100px] rounded uppercase transition-colors hover:bg-gray-700"
+        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[100px] rounded drop-shadow-md uppercase transition-colors hover:bg-gray-700"
       >
         <IoMoon />
       </button>
       <button
         onClick={toggleRandom}
-        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[132px] rounded uppercase transition-colors hover:bg-gray-700"
+        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[132px] rounded drop-shadow-md uppercase transition-colors hover:bg-gray-700"
       >
         <FaDiceThree />
       </button>
       <button
         onClick={toggleAllOn}
-        className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[100px] rounded uppercase transition-colors hover:bg-gray-700"
+        className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[100px] rounded drop-shadow-md uppercase transition-colors hover:bg-gray-700"
       >
         <IoSunny />
       </button>

@@ -11,7 +11,7 @@ const Type: React.FC<Props> = ({
   dependencyNames,
   dependencyPredictions,
 }) => (
-  <div className="bg-gray-100 rounded p-3">
+  <div className="bg-gray-100 rounded p-3 drop-shadow-md">
     <div className="flex items-center gap-2">
       {dependencyPredictions.every(prediction => prediction >= 0.5) ? (
         <IoIosCheckmark className="bg-green-500 text-white text-3xl rounded" />
