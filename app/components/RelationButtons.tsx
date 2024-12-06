@@ -1,4 +1,6 @@
 import { FaDiceThree } from "react-icons/fa";
+import { IoSunny } from "react-icons/io5";
+import { IoMoon } from "react-icons/io5";
 
 type Props = {
   toggleAllOn: () => void;
@@ -14,22 +16,22 @@ const RelationButtons: React.FC<Props> = ({
   return (
     <div className="flex gap-[4px]">
       <button
-        onClick={toggleAllOn}
-        className="bg-gray-800 text-white h-16 w-[108px] rounded transition-colors hover:bg-gray-700"
-      >
-        All On
-      </button>
-      <button
         onClick={toggleAllOff}
-        className="bg-gray-800 text-white h-16 w-[108px] rounded transition-colors hover:bg-gray-700"
+        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[100px] rounded uppercase transition-colors hover:bg-gray-700"
       >
-        All Off
+        <IoMoon />
       </button>
       <button
         onClick={toggleRandom}
-        className="flex justify-center items-center gap-1 bg-gray-800 text-white h-16 w-[108px] rounded transition-colors hover:bg-gray-700"
+        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[132px] rounded uppercase transition-colors hover:bg-gray-700"
       >
-        <FaDiceThree /> Random
+        <FaDiceThree />
+      </button>
+      <button
+        onClick={toggleAllOn}
+        className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[100px] rounded uppercase transition-colors hover:bg-gray-700"
+      >
+        <IoSunny />
       </button>
     </div>
   );
