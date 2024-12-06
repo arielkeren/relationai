@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import Property from "./Property";
 import Type from "./Type";
+import LoadingPopup from "./LoadingPopup";
 
 const PROPERTIES = [
   "Reflexivity",
@@ -73,27 +74,30 @@ const Predictions: React.FC<Props> = ({ relation }) => {
   }, [models, relation]);
 
   return (
-    <div>
-      <div className="flex flex-col gap-1 w-[332px]">
-        {predictions.map((prediction, index) => (
-          <Property
-            key={index}
-            name={PROPERTIES[index]}
-            prediction={prediction}
-          />
-        ))}
-      </div>
+    <>
+      {!models && <LoadingPopup />}
       <div>
-        <Type
-          name="Equivalence"
-          dependencies={[predictions[0], predictions[1], predictions[2]]}
-        />
-        <Type
-          name="Strict Partial Order"
-          dependencies={[predictions[2], predictions[3]]}
-        />
+        <div className="flex flex-col gap-1 w-[332px]">
+          {predictions.map((prediction, index) => (
+            <Property
+              key={index}
+              name={PROPERTIES[index]}
+              prediction={prediction}
+            />
+          ))}
+        </div>
+        <div>
+          <Type
+            name="Equivalence"
+            dependencies={[predictions[0], predictions[1], predictions[2]]}
+          />
+          <Type
+            name="Strict Partial Order"
+            dependencies={[predictions[2], predictions[3]]}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
