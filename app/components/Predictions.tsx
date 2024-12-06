@@ -3,6 +3,15 @@ import * as tf from "@tensorflow/tfjs";
 import Property from "./Property";
 import Type from "./Type";
 
+const PROPERTIES = [
+  "Reflexivity",
+  "Symmetry",
+  "Transitivity",
+  "Anti-Reflexivity",
+  "Anti-Symmetry",
+  "Anti-Transitivity",
+];
+
 type Props = {
   relation: number[][];
 };
@@ -66,12 +75,13 @@ const Predictions: React.FC<Props> = ({ relation }) => {
   return (
     <div>
       <div className="flex flex-col gap-1 w-[332px]">
-        <Property name="Reflexivity" prediction={predictions[0]} />
-        <Property name="Symmetry" prediction={predictions[1]} />
-        <Property name="Transitivity" prediction={predictions[2]} />
-        <Property name="Anti-Reflexivity" prediction={predictions[3]} />
-        <Property name="Anti-Symmetry" prediction={predictions[4]} />
-        <Property name="Anti-Transitivity" prediction={predictions[5]} />
+        {predictions.map((prediction, index) => (
+          <Property
+            key={index}
+            name={PROPERTIES[index]}
+            prediction={prediction}
+          />
+        ))}
       </div>
       <div>
         <Type
