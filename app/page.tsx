@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import Properties from "./components/Predictions";
 import Relation from "./components/Relation";
 import RelationButtons from "./components/RelationButtons";
-import { PropertyName } from "./types";
+import { isPropertyName, PropertyName, TypeName } from "./types";
 import enforceProperty from "./propertyEnforcements";
+import enforceType from "./typeEnforcements";
 
 const Home = () => {
   const [relation, setRelation] = useState(Array(5).fill(Array(5).fill(1)));
@@ -41,14 +42,15 @@ const Home = () => {
     toggleRandom();
   }, []);
 
-  const modifyRelation = (property: PropertyName) => {
+  const modifyRelation = (property: PropertyName | TypeName) => {
     const relationCopy = JSON.parse(JSON.stringify(relation));
-    enforceProperty(relationCopy, property);
+    if (isPropertyName(property)) enforceProperty(relationCopy, property);
+    else enforceType(relationCopy, property);
     setRelation(relationCopy);
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 p-10">
+    <div className="flex flex-col items-center gap-2 p-10 select-none">
       <Relation relation={relation} togglePair={togglePair} />
       <RelationButtons
         toggleAllOn={toggleAllOn}

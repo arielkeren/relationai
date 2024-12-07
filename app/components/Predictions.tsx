@@ -3,23 +3,11 @@ import * as tf from "@tensorflow/tfjs";
 import Property from "./Property";
 import Type from "./Type";
 import LoadingPopup from "./LoadingPopup";
-import { PropertyName } from "../types";
-
-const NAMES: PropertyName[] = [
-  "Reflexivity",
-  "Irreflexivity",
-  "Symmetry",
-  "Asymmetry",
-  "Antisymmetry",
-  "Transitivity",
-  "Antitransitivity",
-  "Totality",
-  "Trichotomy",
-] as const;
+import { PROPERTY_NAMES, PropertyName, TypeName } from "../types";
 
 type Props = {
   relation: number[][];
-  modifyRelation: (property: PropertyName) => void;
+  modifyRelation: (property: PropertyName | TypeName) => void;
 };
 
 const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
@@ -30,7 +18,7 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
     const loadModels = async () => {
       setModels(
         await Promise.all(
-          NAMES.map(property =>
+          PROPERTY_NAMES.map(property =>
             tf.loadLayersModel(`/models/${property.toLowerCase()}/model.json`)
           )
         )
@@ -68,7 +56,7 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
           {predictions.map((prediction, index) => (
             <Property
               key={index}
-              name={NAMES[index]}
+              name={PROPERTY_NAMES[index]}
               prediction={prediction}
               modifyRelation={modifyRelation}
             />
@@ -83,6 +71,7 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
               predictions[2],
               predictions[5],
             ]}
+            modifyRelation={modifyRelation}
           />
           <Type
             name="Partial Order"
@@ -92,6 +81,7 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
               predictions[4],
               predictions[5],
             ]}
+            modifyRelation={modifyRelation}
           />
           <Type
             name="Total Order"
@@ -107,20 +97,23 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
               predictions[5],
               predictions[7],
             ]}
+            modifyRelation={modifyRelation}
           />
           <Type
             name="Strict Partial Order"
             dependencyNames={["Irreflexivity", "Transitivity"]}
             dependencyPredictions={[predictions[1], predictions[5]]}
+            modifyRelation={modifyRelation}
           />
           <Type
             name="Strict Total Order"
-            dependencyNames={["Irreflexivity", "Transitivity", "Totality"]}
+            dependencyNames={["Irreflexivity", "Transitivity", "Trichotomy"]}
             dependencyPredictions={[
               predictions[1],
               predictions[5],
-              predictions[7],
+              predictions[8],
             ]}
+            modifyRelation={modifyRelation}
           />
         </div>
       </div>

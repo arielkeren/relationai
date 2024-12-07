@@ -32,15 +32,15 @@ const enforceProperty = (relation: number[][], property: PropertyName) => {
   }
 };
 
-const enforceReflexivity = (relation: number[][]) => {
+export const enforceReflexivity = (relation: number[][]) => {
   for (let i = 0; i < relation.length; i++) relation[i][i] = 1;
 };
 
-const enforceIrreflexivity = (relation: number[][]) => {
+export const enforceIrreflexivity = (relation: number[][]) => {
   for (let i = 0; i < relation.length; i++) relation[i][i] = 0;
 };
 
-const enforceSymmetry = (relation: number[][]) => {
+export const enforceSymmetry = (relation: number[][]) => {
   for (let i = 0; i < relation.length; i++)
     for (let j = 0; j < relation[i].length; j++)
       if (relation[i][j]) relation[j][i] = 1;
@@ -52,17 +52,26 @@ const enforceAsymmetry = (relation: number[][]) => {
       if (relation[i][j]) relation[j][i] = 0;
 };
 
-const enforceAntisymmetry = (relation: number[][]) => {
+export const enforceAntisymmetry = (relation: number[][]) => {
   for (let i = 0; i < relation.length; i++)
     for (let j = 0; j < relation[i].length; j++)
       if (i !== j && relation[i][j]) relation[j][i] = 0;
 };
 
-const enforceTransitivity = (relation: number[][]) => {
-  for (let i = 0; i < relation.length; i++)
-    for (let j = 0; j < relation[i].length; j++)
-      for (let k = 0; k < relation[j].length; k++)
-        if (relation[i][j] && relation[j][k]) relation[i][k] = 1;
+export const enforceTransitivity = (relation: number[][]) => {
+  let isChanged = true;
+
+  while (isChanged) {
+    isChanged = false;
+
+    for (let i = 0; i < relation.length; i++)
+      for (let j = 0; j < relation[i].length; j++)
+        for (let k = 0; k < relation[j].length; k++)
+          if (relation[i][j] && relation[j][k] && !relation[i][k]) {
+            relation[i][k] = 1;
+            isChanged = true;
+          }
+  }
 };
 
 const enforceAntitransitivity = (relation: number[][]) => {
@@ -72,13 +81,13 @@ const enforceAntitransitivity = (relation: number[][]) => {
         if (relation[i][j] && relation[j][k]) relation[i][k] = 0;
 };
 
-const enforceTotality = (relation: number[][]) => {
+export const enforceTotality = (relation: number[][]) => {
   for (let i = 0; i < relation.length; i++)
     for (let j = 0; j < relation[i].length; j++)
       if (!relation[i][j] && !relation[j][i]) relation[i][j] = 1;
 };
 
-const enforceTrichotomy = (relation: number[][]) => {
+export const enforceTrichotomy = (relation: number[][]) => {
   for (let i = 0; i < relation.length; i++)
     for (let j = 0; j < relation[i].length; j++)
       if (i !== j && !relation[i][j] && !relation[j][i]) relation[i][j] = 1;

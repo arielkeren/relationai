@@ -1,17 +1,23 @@
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
+import { PropertyName, TypeName } from "../types";
 
 type Props = {
-  name: string;
+  name: TypeName;
   dependencyNames: string[];
   dependencyPredictions: number[];
+  modifyRelation: (property: PropertyName | TypeName) => void;
 };
 
 const Type: React.FC<Props> = ({
   name,
   dependencyNames,
   dependencyPredictions,
+  modifyRelation,
 }) => (
-  <div className="bg-gray-100 rounded p-3 drop-shadow-md">
+  <div
+    onClick={() => modifyRelation(name)}
+    className="bg-gray-50 rounded p-3 drop-shadow-md cursor-pointer transition-colors hover:bg-gray-100"
+  >
     <div className="flex items-center gap-2">
       {dependencyPredictions.every(prediction => prediction >= 0.5) ? (
         <IoIosCheckmark className="bg-green-500 text-white text-3xl rounded" />
