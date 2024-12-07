@@ -23,7 +23,31 @@ const Home = () => {
   const toggleAllOff = () =>
     setRelation(JSON.parse(JSON.stringify(Array(5).fill(Array(5).fill(0)))));
 
-  const toggleRandom = () =>
+  const setIdentityRelation = () => {
+    const identity = JSON.parse(
+      JSON.stringify(Array(5).fill(Array(5).fill(0)))
+    );
+
+    for (let i = 0; i < identity.length; i++) identity[i][i] = 1;
+
+    setRelation(identity);
+  };
+
+  const invertRelation = () => {
+    const relationCopy = JSON.parse(JSON.stringify(relation));
+
+    for (let i = 0; i < relationCopy.length; i++) {
+      for (let j = i + 1; j < relationCopy[i].length; j++) {
+        const temp = relationCopy[i][j];
+        relationCopy[i][j] = relationCopy[j][i];
+        relationCopy[j][i] = temp;
+      }
+    }
+
+    setRelation(relationCopy);
+  };
+
+  const randomizeRelation = () =>
     setRelation(
       JSON.parse(
         JSON.stringify(
@@ -39,7 +63,7 @@ const Home = () => {
     );
 
   useEffect(() => {
-    toggleRandom();
+    randomizeRelation();
   }, []);
 
   const modifyRelation = (property: PropertyName | TypeName) => {
@@ -55,7 +79,9 @@ const Home = () => {
       <RelationButtons
         toggleAllOn={toggleAllOn}
         toggleAllOff={toggleAllOff}
-        toggleRandom={toggleRandom}
+        setIdentityRelation={setIdentityRelation}
+        invertRelation={invertRelation}
+        randomizeRelation={randomizeRelation}
       />
       <Properties relation={relation} modifyRelation={modifyRelation} />
     </div>

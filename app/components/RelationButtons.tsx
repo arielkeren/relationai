@@ -4,33 +4,51 @@ import { PiEmptyBold } from "react-icons/pi";
 type Props = {
   toggleAllOn: () => void;
   toggleAllOff: () => void;
-  toggleRandom: () => void;
+  setIdentityRelation: () => void;
+  invertRelation: () => void;
+  randomizeRelation: () => void;
 };
 
 const RelationButtons: React.FC<Props> = ({
   toggleAllOn,
   toggleAllOff,
-  toggleRandom,
+  setIdentityRelation,
+  invertRelation,
+  randomizeRelation,
 }) => {
   return (
-    <div className="flex gap-[4px]">
+    <div className="flex flex-col gap-1">
+      <div className="flex gap-1">
+        <button
+          onClick={toggleAllOff}
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        >
+          <PiEmptyBold />
+        </button>
+        <button
+          onClick={setIdentityRelation}
+          className="flex justify-center items-center gap-1 font-mono text-4xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        >
+          I
+        </button>
+        <button
+          onClick={invertRelation}
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        >
+          R⁻¹
+        </button>
+        <button
+          onClick={toggleAllOn}
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        >
+          A²
+        </button>
+      </div>
       <button
-        onClick={toggleAllOff}
-        className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[100px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
-      >
-        <PiEmptyBold />
-      </button>
-      <button
-        onClick={toggleRandom}
-        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[132px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        onClick={randomizeRelation}
+        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-16 w-[340px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
       >
         <FaDiceThree />
-      </button>
-      <button
-        onClick={toggleAllOn}
-        className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[100px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
-      >
-        A²
       </button>
     </div>
   );
