@@ -1,10 +1,9 @@
-import { MathJax } from "better-react-mathjax";
-import { useState } from "react";
+import { PropertyName } from "../types";
 
 type Props = {
-  name: string;
-  definition: string;
+  name: PropertyName;
   prediction: number;
+  modifyRelation: (property: PropertyName) => void;
 };
 
 const interpolateColor = (value: number) => {
@@ -21,31 +20,19 @@ const interpolateColor = (value: number) => {
   return `rgb(${red}, ${green}, 0)`;
 };
 
-const Property: React.FC<Props> = ({ name, definition, prediction }) => {
-  const [isDefinition, setIsDefinition] = useState(false);
-
+const Property: React.FC<Props> = ({ name, prediction, modifyRelation }) => {
   const backgroundColor = interpolateColor(prediction);
-
-  const toggleDefinition = () => {
-    setIsDefinition(!isDefinition);
-  };
 
   return (
     <div
-      onClick={toggleDefinition}
+      onClick={() => modifyRelation(name)}
       className="flex flex-col gap-1 cursor-pointer p-2 rounded select-none transition-colors hover:bg-gray-100 hover:drop-shadow-md"
     >
       <div className="flex justify-between items-end mb-1 h-6">
-        {isDefinition ? (
-          <MathJax>{definition}</MathJax>
-        ) : (
-          <>
-            <span className="text-xl font-bold uppercase">{name}</span>
-            <span className="text-md font-bold text-gray-600">
-              {Math.round(prediction * 100)}%
-            </span>
-          </>
-        )}
+        <span className="text-xl font-bold uppercase">{name}</span>
+        <span className="text-md font-bold text-gray-600">
+          {Math.round(prediction * 100)}%
+        </span>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-3">
         <div

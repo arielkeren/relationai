@@ -3,8 +3,9 @@ import * as tf from "@tensorflow/tfjs";
 import Property from "./Property";
 import Type from "./Type";
 import LoadingPopup from "./LoadingPopup";
+import { PropertyName } from "../types";
 
-const NAMES = [
+const NAMES: PropertyName[] = [
   "Reflexivity",
   "Irreflexivity",
   "Symmetry",
@@ -14,25 +15,14 @@ const NAMES = [
   "Antitransitivity",
   "Totality",
   "Trichotomy",
-];
-
-const DEFINITIONS = [
-  "\\( \\forall x \\in A, \\; xRx \\)",
-  "\\( \\forall x \\in A, \\; x \\not R x \\)",
-  "\\( \\forall x, y \\in A, \\; xRy \\implies yRx \\)",
-  "\\( \\forall x, y \\in A, \\; xRy \\implies y \\not R x \\)",
-  "\\( \\forall x, y \\in A, \\; xRy \\land yRx \\implies x=y \\)",
-  "\\( \\forall x, y, z \\in A, \\; xRy \\land yRz \\implies xRz \\)",
-  "\\( \\forall x, y, z \\in A, \\; xRy \\land yRz \\implies x \\not R z \\)",
-  "\\( \\forall x \\in A, \\exists y \\in A, \\; xRy \\)",
-  "\\( \\forall x, y \\in A, \\; x \\neq y \\implies xRy \\lor yRx \\)",
-];
+] as const;
 
 type Props = {
   relation: number[][];
+  modifyRelation: (property: PropertyName) => void;
 };
 
-const Predictions: React.FC<Props> = ({ relation }) => {
+const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
   const [models, setModels] = useState<tf.LayersModel[] | null>(null);
   const [predictions, setPredictions] = useState<number[]>(Array(9).fill(0));
 
@@ -79,8 +69,8 @@ const Predictions: React.FC<Props> = ({ relation }) => {
             <Property
               key={index}
               name={NAMES[index]}
-              definition={DEFINITIONS[index]}
               prediction={prediction}
+              modifyRelation={modifyRelation}
             />
           ))}
         </div>
