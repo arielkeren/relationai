@@ -6,6 +6,7 @@ type Props = {
   toggleAllOff: () => void;
   setIdentityRelation: () => void;
   invertRelation: () => void;
+  squareRelation: () => void;
   randomizeRelation: () => void;
 };
 
@@ -14,6 +15,7 @@ const RelationButtons: React.FC<Props> = ({
   toggleAllOff,
   setIdentityRelation,
   invertRelation,
+  squareRelation,
   randomizeRelation,
 }) => {
   return (
@@ -21,25 +23,31 @@ const RelationButtons: React.FC<Props> = ({
       <div className="flex gap-1">
         <button
           onClick={toggleAllOff}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-16 rounded drop-shadow-md transition-colors hover:bg-gray-700"
         >
           <PiEmptyBold />
         </button>
         <button
-          onClick={setIdentityRelation}
-          className="flex justify-center items-center gap-1 font-mono text-4xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
-        >
-          I
-        </button>
-        <button
           onClick={invertRelation}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-16 rounded drop-shadow-md transition-colors hover:bg-gray-700"
         >
           R⁻¹
         </button>
         <button
+          onClick={setIdentityRelation}
+          className="flex justify-center items-center gap-1 font-mono text-4xl bg-gray-800 text-white h-16 w-16 rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        >
+          I
+        </button>
+        <button
+          onClick={squareRelation}
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-16 rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        >
+          R²
+        </button>
+        <button
           onClick={toggleAllOn}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-[82px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-16 w-16 rounded drop-shadow-md transition-colors hover:bg-gray-700"
         >
           A²
         </button>

@@ -47,6 +47,21 @@ const Home = () => {
     setRelation(relationCopy);
   };
 
+  const squareRelation = () => {
+    const relationCopy = JSON.parse(JSON.stringify(relation));
+
+    for (let i = 0; i < relationCopy.length; i++) {
+      for (let j = 0; j < relationCopy[i].length; j++) {
+        for (let k = 0; k < relationCopy.length; k++) {
+          relationCopy[i][k] =
+            relationCopy[i][j] || (relationCopy[i][j] && relationCopy[j][k]);
+        }
+      }
+    }
+
+    setRelation(relationCopy);
+  };
+
   const randomizeRelation = () =>
     setRelation(
       JSON.parse(
@@ -81,6 +96,7 @@ const Home = () => {
         toggleAllOff={toggleAllOff}
         setIdentityRelation={setIdentityRelation}
         invertRelation={invertRelation}
+        squareRelation={squareRelation}
         randomizeRelation={randomizeRelation}
       />
       <Properties relation={relation} modifyRelation={modifyRelation} />
