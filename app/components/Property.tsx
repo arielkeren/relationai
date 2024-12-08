@@ -26,7 +26,7 @@ const Property: React.FC<Props> = ({ name, prediction, modifyRelation }) => {
   return (
     <div
       onClick={() => modifyRelation(name)}
-      className="flex flex-col gap-1 cursor-pointer p-2 rounded transition-colors hover:bg-gray-100 hover:drop-shadow-md"
+      className="flex flex-col gap-1 w-80 cursor-pointer p-2 rounded transition-colors hover:bg-gray-100 hover:drop-shadow-md"
     >
       <div className="flex justify-between items-end mb-1 h-6">
         <span className="text-xl font-bold uppercase">{name}</span>

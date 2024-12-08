@@ -51,71 +51,69 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
   return (
     <>
       {!models && <LoadingPopup />}
-      <div className="flex flex-col gap-5 w-[332px]">
-        <div className="flex flex-col gap-1">
-          {predictions.map((prediction, index) => (
-            <Property
-              key={index}
-              name={PROPERTY_NAMES[index]}
-              prediction={prediction}
-              modifyRelation={modifyRelation}
-            />
-          ))}
-        </div>
-        <div className="flex flex-col gap-2">
-          <Type
-            name="Equivalence"
-            dependencyNames={["Reflexivity", "Symmetry", "Transitivity"]}
-            dependencyPredictions={[
-              predictions[0],
-              predictions[2],
-              predictions[5],
-            ]}
+      <div className="flex flex-col gap-1">
+        {predictions.map((prediction, index) => (
+          <Property
+            key={index}
+            name={PROPERTY_NAMES[index]}
+            prediction={prediction}
             modifyRelation={modifyRelation}
           />
-          <Type
-            name="Partial Order"
-            dependencyNames={["Reflexivity", "Antisymmetry", "Transitivity"]}
-            dependencyPredictions={[
-              predictions[0],
-              predictions[4],
-              predictions[5],
-            ]}
-            modifyRelation={modifyRelation}
-          />
-          <Type
-            name="Total Order"
-            dependencyNames={[
-              "Reflexivity",
-              "Antisymmetry",
-              "Transitivity",
-              "Totality",
-            ]}
-            dependencyPredictions={[
-              predictions[0],
-              predictions[4],
-              predictions[5],
-              predictions[7],
-            ]}
-            modifyRelation={modifyRelation}
-          />
-          <Type
-            name="Strict Partial Order"
-            dependencyNames={["Irreflexivity", "Transitivity"]}
-            dependencyPredictions={[predictions[1], predictions[5]]}
-            modifyRelation={modifyRelation}
-          />
-          <Type
-            name="Strict Total Order"
-            dependencyNames={["Irreflexivity", "Transitivity", "Trichotomy"]}
-            dependencyPredictions={[
-              predictions[1],
-              predictions[5],
-              predictions[8],
-            ]}
-            modifyRelation={modifyRelation}
-          />
-        </div>
+        ))}
+      </div>
+      <div className="flex flex-col justify-center gap-2">
+        <Type
+          name="Equivalence"
+          dependencyNames={["Reflexivity", "Symmetry", "Transitivity"]}
+          dependencyPredictions={[
+            predictions[0],
+            predictions[2],
+            predictions[5],
+          ]}
+          modifyRelation={modifyRelation}
+        />
+        <Type
+          name="Partial Order"
+          dependencyNames={["Reflexivity", "Antisymmetry", "Transitivity"]}
+          dependencyPredictions={[
+            predictions[0],
+            predictions[4],
+            predictions[5],
+          ]}
+          modifyRelation={modifyRelation}
+        />
+        <Type
+          name="Total Order"
+          dependencyNames={[
+            "Reflexivity",
+            "Antisymmetry",
+            "Transitivity",
+            "Totality",
+          ]}
+          dependencyPredictions={[
+            predictions[0],
+            predictions[4],
+            predictions[5],
+            predictions[7],
+          ]}
+          modifyRelation={modifyRelation}
+        />
+        <Type
+          name="Strict Partial Order"
+          dependencyNames={["Irreflexivity", "Transitivity"]}
+          dependencyPredictions={[predictions[1], predictions[5]]}
+          modifyRelation={modifyRelation}
+        />
+        <Type
+          name="Strict Total Order"
+          dependencyNames={["Irreflexivity", "Transitivity", "Trichotomy"]}
+          dependencyPredictions={[
+            predictions[1],
+            predictions[5],
+            predictions[8],
+          ]}
+          modifyRelation={modifyRelation}
+        />
       </div>
     </>
   );

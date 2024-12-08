@@ -16,7 +16,7 @@ const Type: React.FC<Props> = ({
 }) => (
   <div
     onClick={() => modifyRelation(name)}
-    className="bg-gray-50 rounded p-3 drop-shadow-md cursor-pointer transition-colors hover:bg-gray-100"
+    className="w-80 bg-gray-50 rounded p-3 drop-shadow-md cursor-pointer transition-colors hover:bg-gray-100"
   >
     <div className="flex items-center gap-2">
       {dependencyPredictions.every(prediction => prediction >= 0.5) ? (
