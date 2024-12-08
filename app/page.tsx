@@ -48,18 +48,20 @@ const Home = () => {
   };
 
   const squareRelation = () => {
-    const relationCopy = JSON.parse(JSON.stringify(relation));
+    const newRelation = JSON.parse(
+      JSON.stringify(Array(5).fill(Array(5).fill(0)))
+    );
 
-    for (let i = 0; i < relationCopy.length; i++) {
-      for (let j = 0; j < relationCopy[i].length; j++) {
-        for (let k = 0; k < relationCopy.length; k++) {
-          relationCopy[i][k] =
-            relationCopy[i][j] || (relationCopy[i][j] && relationCopy[j][k]);
+    for (let i = 0; i < newRelation.length; i++) {
+      for (let j = 0; j < newRelation.length; j++) {
+        for (let k = 0; k < newRelation.length; k++) {
+          newRelation[i][k] =
+            newRelation[i][k] || (relation[i][j] && relation[j][k]);
         }
       }
     }
 
-    setRelation(relationCopy);
+    setRelation(newRelation);
   };
 
   const randomizeRelation = () =>
