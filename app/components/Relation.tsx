@@ -12,7 +12,7 @@ const Relation: React.FC<Props> = ({ relation, togglePair }) => {
             <button
               onClick={() => togglePair(i, j)}
               key={`${i}${j}`}
-              className={`h-16 w-16 rounded transition-colors duration-200 ${
+              className={`h-16 w-16 rounded transition-colors duration-300 ${
                 cell
                   ? "bg-gray-800 hover:bg-gray-700"
                   : "bg-gray-300 hover:bg-gray-200"
