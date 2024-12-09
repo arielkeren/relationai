@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Properties from "./components/Predictions";
+import Predictions from "./components/Predictions";
 import Relation from "./components/Relation";
 import RelationButtons from "./components/RelationButtons";
 import { isPropertyName, PropertyName, TypeName } from "./types";
 import enforceProperty from "./propertyEnforcements";
 import enforceType from "./typeEnforcements";
+import useModels from "./hooks/useModels";
+import LoadingPopup from "./components/LoadingPopup";
 
-const Home = () => {
+const Home: React.FC = () => {
   const [relation, setRelation] = useState(Array(5).fill(Array(5).fill(1)));
+  const { isLoading, predictProperties, predictInverse, predictSquare } =
+    useModels();
 
   const togglePair = (i: number, j: number) => {
     const relationCopy = JSON.parse(JSON.stringify(relation));
@@ -91,22 +95,29 @@ const Home = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="grid grid-cols-1 gap-10 p-10 select-none min-[760px]:grid-cols-2 min-[1120px]:grid-cols-3">
-        <div className="flex flex-col justify-center gap-2">
-          <Relation relation={relation} togglePair={togglePair} />
-          <RelationButtons
-            toggleAllOn={toggleAllOn}
-            toggleAllOff={toggleAllOff}
-            setIdentityRelation={setIdentityRelation}
-            invertRelation={invertRelation}
-            squareRelation={squareRelation}
-            randomizeRelation={randomizeRelation}
+    <>
+      {isLoading && <LoadingPopup />}
+      <div className="flex justify-center">
+        <div className="grid grid-cols-1 gap-10 p-10 select-none min-[760px]:grid-cols-2 min-[1120px]:grid-cols-3">
+          <div className="flex flex-col justify-center gap-2">
+            <Relation relation={relation} togglePair={togglePair} />
+            <RelationButtons
+              toggleAllOn={toggleAllOn}
+              toggleAllOff={toggleAllOff}
+              setIdentityRelation={setIdentityRelation}
+              invertRelation={invertRelation}
+              squareRelation={squareRelation}
+              randomizeRelation={randomizeRelation}
+            />
+          </div>
+          <Predictions
+            relation={relation}
+            predictProperties={predictProperties}
+            modifyRelation={modifyRelation}
           />
         </div>
-        <Properties relation={relation} modifyRelation={modifyRelation} />
       </div>
-    </div>
+    </>
   );
 };
 

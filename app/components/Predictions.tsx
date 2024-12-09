@@ -1,56 +1,30 @@
 import { useEffect, useState } from "react";
-import * as tf from "@tensorflow/tfjs";
 import Property from "./Property";
 import Type from "./Type";
-import LoadingPopup from "./LoadingPopup";
 import { PROPERTY_NAMES, PropertyName, TypeName } from "../types";
 
 type Props = {
   relation: number[][];
+  predictProperties: (relation: number[][]) => Promise<number[]>;
   modifyRelation: (property: PropertyName | TypeName) => void;
 };
 
-const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
-  const [models, setModels] = useState<tf.LayersModel[] | null>(null);
+const Predictions: React.FC<Props> = ({
+  relation,
+  predictProperties,
+  modifyRelation,
+}) => {
   const [predictions, setPredictions] = useState<number[]>(Array(9).fill(0));
 
   useEffect(() => {
-    const loadModels = async () => {
-      setModels(
-        await Promise.all(
-          PROPERTY_NAMES.map(property =>
-            tf.loadLayersModel(`/models/${property.toLowerCase()}/model.json`)
-          )
-        )
-      );
-    };
-
-    loadModels();
-  }, []);
-
-  useEffect(() => {
-    const makePrediction = async () => {
-      if (!models) return;
-
-      const input = tf.tensor(relation).reshape([1, 5, 5, 1]);
-      const results = models.map(model => model.predict(input));
-
-      const newPredictions = [];
-
-      for (const result of results) {
-        const prediction = await (result as any).array();
-        newPredictions.push(prediction);
-      }
-
-      setPredictions(newPredictions);
-    };
+    const makePrediction = async () =>
+      setPredictions((await predictProperties(relation))!);
 
     makePrediction();
-  }, [models, relation]);
+  }, [predictProperties, relation]);
 
   return (
     <>
-      {!models && <LoadingPopup />}
       <div className="flex flex-col gap-1">
         {predictions.map((prediction, index) => (
           <Property
