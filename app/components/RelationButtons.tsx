@@ -1,5 +1,6 @@
 import { FaDiceThree } from "react-icons/fa";
 import { PiEmptyBold } from "react-icons/pi";
+import Button from "./Button";
 
 type Props = {
   toggleAllOn: () => void;
@@ -21,43 +22,55 @@ const RelationButtons: React.FC<Props> = ({
   return (
     <div className="flex flex-col gap-1">
       <div className="flex gap-1">
-        <button
+        <Button
           onClick={toggleAllOff}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-[60.8px] w-[60.8px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          isWide={false}
+          isGradient={false}
+          isMono={false}
         >
           <PiEmptyBold />
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={invertRelation}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-[60.8px] w-[60.8px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          isWide={false}
+          isGradient={true}
+          isMono={false}
         >
           R⁻¹
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={setIdentityRelation}
-          className="flex justify-center items-center gap-1 font-mono text-4xl bg-gray-800 text-white h-[60.8px] w-[60.8px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          isWide={false}
+          isGradient={false}
+          isMono={true}
         >
           I
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={squareRelation}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-[60.8px] w-[60.8px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          isWide={false}
+          isGradient={true}
+          isMono={false}
         >
           R²
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={toggleAllOn}
-          className="flex justify-center items-center gap-1 text-3xl bg-gray-800 text-white h-[60.8px] w-[60.8px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+          isWide={false}
+          isGradient={false}
+          isMono={false}
         >
           A²
-        </button>
+        </Button>
       </div>
-      <button
+      <Button
         onClick={randomizeRelation}
-        className="flex justify-center items-center gap-1 text-2xl bg-gray-800 text-white h-[60.8px] w-[320px] rounded drop-shadow-md transition-colors hover:bg-gray-700"
+        isWide={true}
+        isGradient={false}
+        isMono={false}
       >
         <FaDiceThree />
-      </button>
+      </Button>
     </div>
   );
 };
