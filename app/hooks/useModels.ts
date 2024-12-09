@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { LayersModel, loadLayersModel, tensor } from "@tensorflow/tfjs";
 import { PROPERTY_NAMES, OPERATION_NAMES } from "../types";
+import { getZerosArray } from "../operations";
 
 const useModels = () => {
   const [propertyModels, setPropertyModels] = useState<LayersModel[] | null>(
@@ -49,14 +50,19 @@ const useModels = () => {
   };
 
   const predictOperation = async (relation: number[][], operation: number) => {
-    if (!operationModels) return;
+    if (!operationModels) return getZerosArray();
 
     const input = tensor(relation).reshape([1, 5, 5, 1]);
     const prediction = await (
       operationModels[operation].predict(input) as any
     ).array();
 
-    return prediction as number[][];
+    const matrix = getZerosArray();
+
+    for (let i = 0; i < prediction[0].length; i++)
+      matrix[Math.floor(i / 5)][i % 5] = Math.round(prediction[0][i]);
+
+    return matrix as number[][];
   };
 
   const predictInverse = (relation: number[][]) =>

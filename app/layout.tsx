@@ -8,8 +8,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Relations",
-  description: "Predict properties of mathematical relations",
+  title: "RelationAI",
+  description:
+    "Use convolutional neural networks to predict properties of, and perform operations on, mathematical binary relations.",
 };
 
 type Props = {

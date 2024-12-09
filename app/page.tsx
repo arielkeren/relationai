@@ -9,6 +9,12 @@ import enforceProperty from "./propertyEnforcements";
 import enforceType from "./typeEnforcements";
 import useModels from "./hooks/useModels";
 import LoadingPopup from "./components/LoadingPopup";
+import {
+  getIdentityArray,
+  getOnesArray,
+  getRandomArray,
+  getZerosArray,
+} from "./operations";
 
 const Home: React.FC = () => {
   const [relation, setRelation] = useState(Array(5).fill(Array(5).fill(1)));
@@ -21,71 +27,18 @@ const Home: React.FC = () => {
     setRelation(relationCopy);
   };
 
-  const toggleAllOn = () =>
-    setRelation(JSON.parse(JSON.stringify(Array(5).fill(Array(5).fill(1)))));
+  const toggleAllOn = () => setRelation(getOnesArray());
 
-  const toggleAllOff = () =>
-    setRelation(JSON.parse(JSON.stringify(Array(5).fill(Array(5).fill(0)))));
+  const toggleAllOff = () => setRelation(getZerosArray());
 
-  const setIdentityRelation = () => {
-    const identity = JSON.parse(
-      JSON.stringify(Array(5).fill(Array(5).fill(0)))
-    );
+  const setIdentityRelation = () => setRelation(getIdentityArray());
 
-    for (let i = 0; i < identity.length; i++) identity[i][i] = 1;
+  const randomizeRelation = () => setRelation(getRandomArray());
 
-    setRelation(identity);
-  };
+  const invertRelation = async () =>
+    setRelation(await predictInverse(relation));
 
-  const invertRelation = () => {
-    const relationCopy = JSON.parse(JSON.stringify(relation));
-
-    for (let i = 0; i < relationCopy.length; i++) {
-      for (let j = i + 1; j < relationCopy[i].length; j++) {
-        const temp = relationCopy[i][j];
-        relationCopy[i][j] = relationCopy[j][i];
-        relationCopy[j][i] = temp;
-      }
-    }
-
-    setRelation(relationCopy);
-  };
-
-  const squareRelation = () => {
-    const newRelation = JSON.parse(
-      JSON.stringify(Array(5).fill(Array(5).fill(0)))
-    );
-
-    for (let i = 0; i < newRelation.length; i++) {
-      for (let j = 0; j < newRelation.length; j++) {
-        for (let k = 0; k < newRelation.length; k++) {
-          newRelation[i][k] =
-            newRelation[i][k] || (relation[i][j] && relation[j][k]);
-        }
-      }
-    }
-
-    setRelation(newRelation);
-  };
-
-  const randomizeRelation = () =>
-    setRelation(
-      JSON.parse(
-        JSON.stringify(
-          Array(5)
-            .fill(0)
-            .map(() =>
-              Array(5)
-                .fill(0)
-                .map(() => Math.round(Math.random()))
-            )
-        )
-      )
-    );
-
-  useEffect(() => {
-    randomizeRelation();
-  }, []);
+  const squareRelation = async () => setRelation(await predictSquare(relation));
 
   const modifyRelation = (property: PropertyName | TypeName) => {
     const relationCopy = JSON.parse(JSON.stringify(relation));
@@ -93,6 +46,10 @@ const Home: React.FC = () => {
     else enforceType(relationCopy, property);
     setRelation(relationCopy);
   };
+
+  useEffect(() => {
+    randomizeRelation();
+  }, []);
 
   return (
     <>
