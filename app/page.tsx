@@ -15,11 +15,17 @@ import {
   getRandomArray,
   getZerosArray,
 } from "./operations";
+import CalculatingPopup from "./components/CalculatingPopup";
 
 const Home: React.FC = () => {
   const [relation, setRelation] = useState(Array(5).fill(Array(5).fill(1)));
-  const { isLoading, predictProperties, predictInverse, predictSquare } =
-    useModels();
+  const {
+    isLoading,
+    isCalculating,
+    predictProperties,
+    predictInverse,
+    predictSquare,
+  } = useModels();
 
   const togglePair = (i: number, j: number) => {
     const relationCopy = JSON.parse(JSON.stringify(relation));
@@ -54,6 +60,7 @@ const Home: React.FC = () => {
   return (
     <>
       {isLoading && <LoadingPopup />}
+      {isCalculating && <CalculatingPopup />}
       <div className="flex justify-center">
         <div className="grid grid-cols-1 gap-10 p-10 select-none min-[760px]:grid-cols-2 min-[1120px]:grid-cols-3">
           <div className="flex flex-col justify-center gap-2">

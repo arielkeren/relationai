@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LayersModel, loadLayersModel, tensor } from "@tensorflow/tfjs";
 import { PROPERTY_NAMES, OPERATION_NAMES } from "../types";
 import { getZerosArray } from "../operations";
@@ -10,6 +10,7 @@ const useModels = () => {
   const [operationModels, setOperationModels] = useState<LayersModel[] | null>(
     null
   );
+  const [isCalculating, setIsCalculating] = useState(false);
 
   useEffect(() => {
     const loadModels = async () => {
@@ -33,24 +34,35 @@ const useModels = () => {
     loadModels();
   }, []);
 
-  const predictProperties = async (relation: number[][]) => {
-    if (!propertyModels) return Array(9).fill(0);
+  const predictProperties = useCallback(
+    async (relation: number[][]) => {
+      if (!propertyModels) return Array(9).fill(0);
 
-    const input = tensor(relation).reshape([1, 5, 5, 1]);
-    const results = propertyModels.map(model => model.predict(input));
+      setIsCalculating(true);
 
-    const predictions = [];
+      const input = tensor(relation).reshape([1, 5, 5, 1]);
+      const results = propertyModels.map(model => model.predict(input));
 
-    for (const result of results) {
-      const prediction = await (result as any).array();
-      predictions.push(prediction[0][0]);
-    }
+      const predictions = [];
 
-    return predictions as number[];
-  };
+      for (const result of results) {
+        const prediction = await (result as any).array();
+        predictions.push(prediction[0][0]);
+      }
+
+      setTimeout(() => {
+        setIsCalculating(false);
+      }, 500);
+
+      return predictions as number[];
+    },
+    [propertyModels]
+  );
 
   const predictOperation = async (relation: number[][], operation: number) => {
     if (!operationModels) return getZerosArray();
+
+    setIsCalculating(true);
 
     const input = tensor(relation).reshape([1, 5, 5, 1]);
     const prediction = await (
@@ -72,6 +84,7 @@ const useModels = () => {
 
   return {
     isLoading: !propertyModels || !operationModels,
+    isCalculating,
     predictProperties,
     predictInverse,
     predictSquare,
