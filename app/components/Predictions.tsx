@@ -32,7 +32,7 @@ const Predictions: React.FC<Props> = ({ relation, modifyRelation }) => {
     const makePrediction = async () => {
       if (!models) return;
 
-      const input = tf.tensor(relation).reshape([1, 25]);
+      const input = tf.tensor(relation).reshape([1, 5, 5, 1]);
       const results = models.map(model => model.predict(input));
 
       const newPredictions = [];
