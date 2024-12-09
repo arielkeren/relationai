@@ -91,7 +91,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center">
       <div className="grid grid-cols-1 gap-10 p-10 select-none min-[760px]:grid-cols-2 min-[1120px]:grid-cols-3">
         <div className="flex flex-col justify-center gap-2">
           <Relation relation={relation} togglePair={togglePair} />
