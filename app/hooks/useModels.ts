@@ -40,7 +40,7 @@ const useModels = () => {
 
       setIsCalculating(true);
 
-      const input = tensor(relation).reshape([1, 5, 5, 1]);
+      const input = tensor(relation).reshape([1, 25]);
       const results = propertyModels.map(model => model.predict(input));
 
       const predictions = [];
@@ -64,7 +64,9 @@ const useModels = () => {
 
     setIsCalculating(true);
 
-    const input = tensor(relation).reshape([1, 5, 5, 1]);
+    const input = tensor(relation).reshape(
+      operation == 0 ? [1, 25] : [1, 5, 5, 1]
+    );
     const prediction = await (
       operationModels[operation].predict(input) as any
     ).array();
@@ -77,17 +79,18 @@ const useModels = () => {
     return matrix as number[][];
   };
 
-  const predictInverse = (relation: number[][]) =>
+  const predictInversion = (relation: number[][]) =>
     predictOperation(relation, 0);
 
-  const predictSquare = (relation: number[][]) => predictOperation(relation, 1);
+  const predictComposition = (relation: number[][]) =>
+    predictOperation(relation, 1);
 
   return {
     isLoading: !propertyModels || !operationModels,
     isCalculating,
     predictProperties,
-    predictInverse,
-    predictSquare,
+    predictInversion,
+    predictComposition,
   };
 };
 

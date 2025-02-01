@@ -23,8 +23,8 @@ const Home: React.FC = () => {
     isLoading,
     isCalculating,
     predictProperties,
-    predictInverse,
-    predictSquare,
+    predictInversion,
+    predictComposition,
   } = useModels();
 
   const togglePair = (i: number, j: number) => {
@@ -42,9 +42,10 @@ const Home: React.FC = () => {
   const randomizeRelation = () => setRelation(getRandomArray());
 
   const invertRelation = async () =>
-    setRelation(await predictInverse(relation));
+    setRelation(await predictInversion(relation));
 
-  const squareRelation = async () => setRelation(await predictSquare(relation));
+  const composeRelation = async () =>
+    setRelation(await predictComposition(relation));
 
   const modifyRelation = (property: PropertyName | TypeName) => {
     const relationCopy = JSON.parse(JSON.stringify(relation));
@@ -70,7 +71,7 @@ const Home: React.FC = () => {
               toggleAllOff={toggleAllOff}
               setIdentityRelation={setIdentityRelation}
               invertRelation={invertRelation}
-              squareRelation={squareRelation}
+              composeRelation={composeRelation}
               randomizeRelation={randomizeRelation}
             />
           </div>

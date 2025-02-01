@@ -7,7 +7,7 @@ type Props = {
   toggleAllOff: () => void;
   setIdentityRelation: () => void;
   invertRelation: () => void;
-  squareRelation: () => void;
+  composeRelation: () => void;
   randomizeRelation: () => void;
 };
 
@@ -16,7 +16,7 @@ const RelationButtons: React.FC<Props> = ({
   toggleAllOff,
   setIdentityRelation,
   invertRelation,
-  squareRelation,
+  composeRelation,
   randomizeRelation,
 }) => {
   return (
@@ -47,7 +47,7 @@ const RelationButtons: React.FC<Props> = ({
           I
         </Button>
         <Button
-          onClick={squareRelation}
+          onClick={composeRelation}
           isWide={false}
           isGradient={true}
           isMono={false}

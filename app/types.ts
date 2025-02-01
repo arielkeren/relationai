@@ -28,7 +28,7 @@ export const PROPERTY_NAMES: PropertyName[] = [
   "Trichotomy",
 ] as const;
 
-export const OPERATION_NAMES = ["Inverse", "Square"] as const;
+export const OPERATION_NAMES = ["Inversion", "Composition"] as const;
 
 export const isPropertyName = (name: string): name is PropertyName =>
   PROPERTY_NAMES.includes(name as PropertyName);
