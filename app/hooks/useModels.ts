@@ -64,9 +64,7 @@ const useModels = () => {
 
     setIsCalculating(true);
 
-    const input = tensor(relation).reshape(
-      operation == 0 ? [1, 25] : [1, 5, 5, 1]
-    );
+    const input = tensor(relation).reshape([1, 25]);
     const prediction = await (
       operationModels[operation].predict(input) as any
     ).array();
