@@ -64,7 +64,7 @@ The list of all 5 properties:
 
 9 different models were trained to recognize patterns in 5-by-5 binary relations, in order to determine if some property is satisfied.<br>
 All of the models are close to being 100% accurate. They are all simple feed-forward models with a sigmoid layer in the end, consisting of a single neuron, to get a binary classifier.<br>
-The following code is the structure of all 9 models in Tensorflow:
+The following code is the structure of all 9 models in Keras:
 
 ```py
 model = Sequential()
@@ -80,8 +80,8 @@ model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
 Apart from those 9 property-prediction models, there are 2 models which predict some kind of new relation.<br>
 One of them predicts the inverse of the given relation, while the other predicts the square of the given relation (composed with itself).<br>
 The inversion model is very similar to the previous 9 models, but with 25 neurons in the last layer, instead of only 1, to predict each of the 25 cells in the new relation matrix.<br>
-It gets close to being 100% accurate.
-The following code is the structure of the inversion model in Tensorflow:
+It is close to 100% accurate.<br>
+The following code is the structure of the inversion model in Keras:
 
 ```py
 model = Sequential()
@@ -94,31 +94,16 @@ model.add(Dense(25, activation="sigmoid"))
 model.compile(optimizer="adam", loss="binary_crossentropy")
 ```
 
-The final model is the composition model. This model uses a convolutional neural network, with 25 neurons in the last layer (one for each cell in the relation matrix).<br>
-It is about 96% accurate.<br>
-The following code is the structure of the composition model in Tensorflow:
+The final model is the composition model. This model is also very similar to the inversion model, but with 128 neurons in the hidden layer, instead of the usual 32 neurons (composition is much more complicated than inversion).<br>
+It is also close to 100% accurate.<br>
+The following code is the structure of the composition model in Keras:
 
 ```py
 model = Sequential()
 
-model.add(Input(shape=(5, 5, 1)))
-
-model.add(Conv2D(32, (3, 3), activation=None, padding="same"))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
-
-model.add(Conv2D(64, (3, 3), activation=None, padding="same"))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
-
-model.add(Flatten())
+model.add(Input(shape=(25,)))
 
 model.add(Dense(128, activation="relu"))
-model.add(Dropout(0.3))
-
-model.add(Dense(64, activation="relu"))
-model.add(Dropout(0.3))
-
 model.add(Dense(25, activation="sigmoid"))
 
 model.compile(optimizer="adam", loss="binary_crossentropy")
