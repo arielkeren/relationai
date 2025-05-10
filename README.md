@@ -6,7 +6,7 @@ Predict properties and apply operations on mathematical binary relations using A
 
 ## Live Demo
 
-Try it here: [https://relationai.netlify.app](https://relationai.netlify.app)
+Try it here: [relationai.netlify.app](https://relationai.netlify.app)
 
 ## Tech Stack
 
@@ -145,4 +145,4 @@ In total, more than **11 million** different relations were used during training
   # or
   pnpm dev
   ```
-- Open [http://localhost:3000](http://localhost:3000) on your browser.
+- Open [localhost:3000](http://localhost:3000) on your browser.
