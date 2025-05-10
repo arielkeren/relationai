@@ -15,8 +15,13 @@ Try it here: [https://relationai.netlify.app](https://relationai.netlify.app)
 - TypeScript
 - Tailwind CSS
 - Python
-- Numpy
-- Tensorflow
+- NumPy
+- TensorFlow
+- Keras
+
+## Background
+
+This project was made as the final project for 5 units of software engineering in high school.
 
 ## Features
 
