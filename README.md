@@ -1,6 +1,6 @@
 # RelationAI
 
-Predict properties of binary relations in mathematics using convolutional neural networks.
+Predict properties and apply operations on mathematical binary relations using AI.
 
 ![RelationAI](https://github.com/user-attachments/assets/f1fa20b0-3417-45d1-b5e9-110ef9a14345)
 
@@ -63,7 +63,7 @@ The list of all 5 properties:
 ## Machine Learning
 
 9 different models were trained to recognize patterns in 5-by-5 binary relations, in order to determine if some property is satisfied.<br>
-All of the models are close to being 100% accurate. They are all simple feed-forward models with a sigmoid layer in the end, consisting of a single neuron, to get a binary classifier.<br>
+All of the models are close to being 100% accurate. They are all feedforward models with a sigmoid layer in the end, consisting of a single neuron, to get a binary classifier.<br>
 The following code is the structure of all 9 models in Keras:
 
 ```py
@@ -109,15 +109,28 @@ model.add(Dense(25, activation="sigmoid"))
 model.compile(optimizer="adam", loss="binary_crossentropy")
 ```
 
-All of the models mentioned above were trained each on its own custom dataset of **120,000** different relations. Each was validated on **40,000** relations, and tested on **40,000** never-before-seen relations.<br>
-Each model was trained on **10** epochs and with a batch size of **32**.<br>
-In total, more than **2 million** different relations were used during training, validation and testing.
+Every property and operation has been given its own custom dataset of **1,000,000** different relations.<br>
+The datasets were each split to 60% training (600,000), 20% validation (200,000) and 20% testing (200,000).<br>
+Each model was trained for **10** epochs, with a batch size of **32**.<br>
+In total, more than **11 million** different relations were used during training, validation and testing.
 
 ## Instructions
 
 - Clone this repository.
   ```bash
   git clone https://github.com/arielkeren/relationai.git
+  ```
+- Navigate to the "frontend" directory.
+  ```bash
+  cd relationai/frontend
+  ```
+- Install the required Node modules.
+  ```bash
+  npm install
+  # or
+  yarn install
+  # or
+  pnpm install
   ```
 - Run the development server.
   ```bash
