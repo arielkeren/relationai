@@ -1,10 +1,12 @@
 import RelationCell from "./RelationCell";
 
+// Props for the Relation component
 type Props = {
   relation: number[][];
   togglePair: (i: number, j: number) => void;
 };
 
+// Relation component
 const Relation: React.FC<Props> = ({ relation, togglePair }) => (
   <div className="flex flex-col gap-1">
     {relation.map((row, i) => (

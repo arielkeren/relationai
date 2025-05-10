@@ -1,3 +1,4 @@
+// Props for the RelationCell component
 type Props = {
   isOn: boolean;
   i: number;
@@ -5,6 +6,7 @@ type Props = {
   togglePair: (i: number, j: number) => void;
 };
 
+// RelationCell component
 const RelationCell: React.FC<Props> = ({ isOn, i, j, togglePair }) => (
   <button
     onClick={() => togglePair(i, j)}

@@ -1,3 +1,4 @@
+// Props for the Button component
 type Props = {
   children: React.ReactNode;
   onClick: () => void;
@@ -6,6 +7,7 @@ type Props = {
   isMono: boolean;
 };
 
+// Button component
 const Button: React.FC<Props> = ({
   children,
   onClick,

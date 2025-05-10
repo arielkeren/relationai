@@ -1,6 +1,7 @@
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
 import { PropertyName, TypeName } from "../types";
 
+// Props for the Type component
 type Props = {
   name: TypeName;
   dependencyNames: string[];
@@ -8,6 +9,7 @@ type Props = {
   modifyRelation: (property: PropertyName | TypeName) => void;
 };
 
+// Type component
 const Type: React.FC<Props> = ({
   name,
   dependencyNames,

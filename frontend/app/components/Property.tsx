@@ -1,14 +1,17 @@
 import { PropertyName, TypeName } from "../types";
 
+// Props for the Property component
 type Props = {
   name: PropertyName;
   prediction: number;
   modifyRelation: (property: PropertyName | TypeName) => void;
 };
 
+// Interpolates between red and green based on the prediction value
 const interpolateColor = (value: number) => {
   let red, green;
 
+  // Closer to 0 is red, closer to 1 is green
   if (value <= 0.5) {
     red = 255;
     green = Math.round(value * 2 * 255);
@@ -17,10 +20,13 @@ const interpolateColor = (value: number) => {
     green = 255;
   }
 
+  // Return the interpolated color in RGB format
   return `rgb(${red}, ${green}, 0)`;
 };
 
+// Property component
 const Property: React.FC<Props> = ({ name, prediction, modifyRelation }) => {
+  // Interpolate the color based on the prediction value
   const backgroundColor = interpolateColor(prediction);
 
   return (

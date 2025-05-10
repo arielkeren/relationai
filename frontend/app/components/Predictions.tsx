@@ -3,20 +3,25 @@ import Property from "./Property";
 import Type from "./Type";
 import { PROPERTY_NAMES, PropertyName, TypeName } from "../types";
 
+// Props for the Predictions component
 type Props = {
   relation: number[][];
   predictProperties: (relation: number[][]) => Promise<number[]>;
   modifyRelation: (property: PropertyName | TypeName) => void;
 };
 
+// Predictions component
 const Predictions: React.FC<Props> = ({
   relation,
   predictProperties,
   modifyRelation,
 }) => {
+  // State to manage the predictions
   const [predictions, setPredictions] = useState<number[]>(Array(9).fill(0));
 
+  // Predict properties when the relation changes
   useEffect(() => {
+    // Updates the state with new predictions
     const makePrediction = async () =>
       setPredictions((await predictProperties(relation))!);
 
